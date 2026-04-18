@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Descargar — Tales of Pirates</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .page-hero {
+      background: linear-gradient(180deg,var(--navy-2),var(--navy));
+      border-bottom: 1px solid rgba(201,168,76,.3);
+      text-align: center; padding: 50px 20px 40px;
+    }
+    .page-title { color: #fff; font-size: 28px; letter-spacing: 8px; text-transform: uppercase; margin: 0 0 8px; }
+    .page-sub   { color: var(--blue-dim); font-size: 10px; letter-spacing: 4px; text-transform: uppercase; }
+
+    .dl-card {
+      background: linear-gradient(160deg,var(--navy-3),var(--navy));
+      border: 1px solid var(--border); border-radius: 6px;
+      padding: 40px 36px; text-align: center;
+      max-width: 560px; margin: 0 auto 32px;
+      transition: border-color .2s;
+    }
+    .dl-card:hover { border-color: rgba(201,168,76,.4); }
+    .dl-icon  { font-size: 52px; margin-bottom: 16px; }
+    .dl-title { color: var(--gold); font-size: 14px; letter-spacing: 4px; text-transform: uppercase; margin: 0 0 8px; }
+    .dl-desc  { color: var(--blue-dim); font-size: 12px; line-height: 1.7; margin: 0 0 24px; }
+    .dl-meta  { display: flex; justify-content: center; gap: 24px; margin-bottom: 28px; flex-wrap: wrap; }
+    .dl-meta-item { text-align: center; }
+    .dl-meta-val  { display: block; color: var(--text); font-size: 14px; font-weight: bold; }
+    .dl-meta-lbl  { display: block; color: var(--blue-dim); font-size: 9px; letter-spacing: 2px; text-transform: uppercase; margin-top: 2px; }
+
+    /* TODO: reemplazar href con link real de descarga */
+    .dl-btn {
+      display: inline-block;
+      background: linear-gradient(180deg,#b8922a,#7a5e14);
+      border: 1px solid var(--gold); border-radius: 3px;
+      color: #0a0a0a; font-size: 11px; font-family: Georgia, serif;
+      font-weight: bold; letter-spacing: 4px; text-transform: uppercase;
+      padding: 13px 32px; cursor: pointer;
+      box-shadow: 0 4px 16px rgba(0,0,0,.5);
+      transition: all .2s; text-decoration: none;
+    }
+    .dl-btn:hover { background: linear-gradient(180deg,#d4a830,#9a7018); box-shadow: 0 0 22px rgba(201,168,76,.3); transform: translateY(-2px); color: #0a0a0a; }
+    .dl-btn.disabled { opacity: .4; pointer-events: none; }
+
+    .steps-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+    .step-card {
+      background: linear-gradient(160deg,var(--navy-3),var(--navy));
+      border: 1px solid var(--border); border-radius: 4px;
+      padding: 28px 20px; text-align: center;
+    }
+    .step-num  { background: rgba(201,168,76,.1); border: 1px solid rgba(201,168,76,.3); border-radius: 50%; width: 40px; height: 40px; line-height: 40px; text-align: center; color: var(--gold); font-size: 16px; font-weight: bold; margin: 0 auto 14px; }
+    .step-title{ color: var(--gold); font-size: 11px; letter-spacing: 3px; text-transform: uppercase; margin: 0 0 8px; }
+    .step-desc { color: var(--blue-dim); font-size: 12px; line-height: 1.7; }
+
+    .soon-note {
+      background: rgba(201,168,76,.06);
+      border: 1px solid rgba(201,168,76,.2);
+      border-radius: 4px; padding: 16px 20px;
+      color: var(--blue); font-size: 12px; line-height: 1.6;
+      text-align: center; max-width: 560px; margin: 0 auto;
+    }
+
+    @media (max-width: 640px) {
+      .steps-grid { grid-template-columns: 1fr; }
+      .dl-card    { padding: 28px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="index.html"><img src="assets/top_logo.png" alt="Tales of Pirates" class="nav-logo" /></a>
+      <ul class="nav-links">
+        <li><a href="index.html">&#9875; Inicio</a></li>
+        <li><a href="registro.html">&#128100; Registro</a></li>
+        <li><a href="rankings.html">&#9878; Rankings</a></li>
+        <li><a href="descargar.html" class="nav-download">&#11015; Descargar</a></li>
+        <li><a href="#" data-discord class="nav-discord" target="_blank" rel="noopener">&#128172; Discord</a></li>
+      </ul>
+      <button class="nav-burger" id="navBurger" aria-label="Menú"><span></span><span></span><span></span></button>
+    </div>
+    <div class="nav-mobile" id="navMobile">
+      <a href="index.html">&#9875; Inicio</a>
+      <a href="registro.html" class="nm-reg">&#128100; Registro</a>
+      <a href="rankings.html">&#9878; Rankings</a>
+      <a href="descargar.html">&#11015; Descargar</a>
+      <a href="#" data-discord class="nm-disc" target="_blank" rel="noopener">&#128172; Discord</a>
+    </div>
+  </nav>
+
+  <div class="page-hero">
+    <h1 class="page-title">Descargar</h1>
+    <p class="page-sub">&#11015; &nbsp; Cliente del juego &nbsp; &#11015;</p>
+  </div>
+
+  <div class="section-wrap">
+
+    <!-- Tarjeta de descarga -->
+    <div class="dl-card">
+      <div class="dl-icon">&#127869;</div>
+      <h2 class="dl-title">Tales of Pirates — Cliente Completo</h2>
+      <p class="dl-desc">Descarga el cliente oficial del servidor. Incluye todos los archivos necesarios para jugar. No requiere instalación previa del juego original.</p>
+      <div class="dl-meta">
+        <div class="dl-meta-item">
+          <span class="dl-meta-val">~2 GB</span>  <!-- TODO: actualizar tamaño real -->
+          <span class="dl-meta-lbl">Tamaño</span>
+        </div>
+        <div class="dl-meta-item">
+          <span class="dl-meta-val">PKO v1.38</span>
+          <span class="dl-meta-lbl">Versión</span>
+        </div>
+        <div class="dl-meta-item">
+          <span class="dl-meta-val">Windows</span>
+          <span class="dl-meta-lbl">Sistema</span>
+        </div>
+      </div>
+      <!-- TODO: reemplazar href="#" con link real (Google Drive, MEGA, etc.) -->
+      <a href="#" class="dl-btn disabled">&#11015; &nbsp; PRÓXIMAMENTE</a>
+    </div>
+
+    <div class="soon-note">
+      &#9993;&nbsp; El enlace de descarga estará disponible pronto. Únete a nuestro <a href="#" data-discord style="color:var(--gold);">Discord</a> para recibir la notificación cuando esté listo.
+    </div>
+
+    <!-- Pasos de instalación -->
+    <div class="section-header" style="margin-top:56px">
+      <div class="sh-line"></div>
+      <span class="sh-title">&#9876; &nbsp; Cómo instalar &nbsp; &#9876;</span>
+      <div class="sh-line"></div>
+    </div>
+
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <h3 class="step-title">Descargar</h3>
+        <p class="step-desc">Descarga el archivo ZIP del cliente desde el botón de arriba.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <h3 class="step-title">Extraer</h3>
+        <p class="step-desc">Extrae el ZIP en la carpeta que prefieras (ej: C:\ToP).</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <h3 class="step-title">¡A jugar!</h3>
+        <p class="step-desc">Ejecuta <strong>GameClient.exe</strong>, inicia sesión con tu cuenta y ¡zarpa!</p>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="footer"><p>&#9875; &nbsp; Tales of Pirates — The High Seas Await &nbsp; &#9875;</p></footer>
+
+  <script src="js/nav.js"></script>
+</body>
+</html>

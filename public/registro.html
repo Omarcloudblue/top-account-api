@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registro — Tales of Pirates</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .page-wrap {
+      min-height: calc(100vh - 64px - 55px);
+      display: flex; align-items: center; justify-content: center;
+      padding: 40px 16px;
+      background: linear-gradient(160deg,var(--navy-3) 0%,var(--navy) 60%,var(--navy-2) 100%);
+    }
+    .card {
+      background: linear-gradient(160deg,var(--navy-3),var(--navy));
+      border: 2px solid var(--gold);
+      border-radius: 6px;
+      box-shadow: 0 0 50px rgba(0,0,0,.8);
+      width: 100%; max-width: 440px;
+      overflow: hidden;
+    }
+    .card-header {
+      background: linear-gradient(180deg,#0a1628,#0d2244);
+      padding: 24px 28px 18px;
+      text-align: center;
+      border-bottom: 2px solid var(--gold);
+    }
+    .card-logo { max-height: 48px; object-fit: contain; filter: drop-shadow(0 0 8px rgba(201,168,76,.5)); margin-bottom: 8px; }
+    .card-subtitle { color: var(--blue-dim); font-size: 9px; letter-spacing: 5px; text-transform: uppercase; }
+
+    .card-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+    }
+    .tab-btn {
+      flex: 1; background: none; border: none;
+      color: var(--blue-dim); font-family: Georgia, serif;
+      font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+      padding: 12px 8px; cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all .2s; margin-bottom: -1px;
+    }
+    .tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
+    .tab-btn:hover  { color: var(--gold); }
+
+    .card-body { padding: 26px 28px 28px; }
+
+    /* Form */
+    .view { display: none; }
+    .view.active { display: block; }
+
+    .field-group { margin-bottom: 16px; }
+    .field-label { display: block; color: var(--blue); font-size: 9px; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 6px; }
+    .field-input {
+      width: 100%;
+      background: rgba(6,13,26,.85);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      color: var(--text);
+      font-size: 14px; font-family: Georgia, serif;
+      padding: 10px 13px;
+      outline: none;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .field-input:focus { border-color: var(--gold); box-shadow: 0 0 0 2px rgba(201,168,76,.12); }
+    .field-input::placeholder { color: #2e4a6b; font-style: italic; }
+
+    .otp-input { text-align: center; font-size: 24px; letter-spacing: 12px; font-weight: bold; color: var(--gold); }
+
+    .submit-btn {
+      width: 100%; margin-top: 6px;
+      background: linear-gradient(180deg,#b8922a,#7a5e14);
+      border: 1px solid var(--gold); border-radius: 3px;
+      color: #0a0a0a; font-size: 11px; font-family: Georgia, serif;
+      font-weight: bold; letter-spacing: 4px; text-transform: uppercase;
+      padding: 12px 20px; cursor: pointer;
+      box-shadow: 0 2px 10px rgba(0,0,0,.6);
+      transition: all .2s;
+    }
+    .submit-btn:hover:not(:disabled) { background: linear-gradient(180deg,#d4a830,#9a7018); box-shadow: 0 0 18px rgba(201,168,76,.3); transform: translateY(-1px); }
+    .submit-btn:disabled { opacity: .3; cursor: not-allowed; transform: none; }
+
+    .link-btn { background: none; border: none; color: #3d5a75; font-size: 10px; font-family: Georgia, serif; letter-spacing: 2px; cursor: pointer; padding: 4px 0; text-decoration: underline; text-underline-offset: 3px; transition: color .2s; }
+    .link-btn:hover { color: var(--gold); }
+    .link-row { text-align: center; margin-top: 12px; }
+
+    /* Loading */
+    .loading { text-align: center; padding: 30px 0; }
+    .loading-icon { font-size: 40px; display: block; margin-bottom: 12px; animation: spin 1.8s linear infinite; }
+    .loading-text { color: var(--blue-dim); font-size: 10px; letter-spacing: 3px; text-transform: uppercase; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Success */
+    .success-view { text-align: center; padding: 16px 0; }
+    .success-icon  { font-size: 46px; margin-bottom: 10px; }
+    .success-title { color: var(--gold); font-size: 16px; letter-spacing: 3px; text-transform: uppercase; margin: 0 0 8px; }
+    .success-text  { color: var(--blue); font-size: 13px; line-height: 1.6; margin: 0 0 14px; }
+    .success-note  { background: rgba(201,168,76,.07); border: 1px solid rgba(201,168,76,.2); border-radius: 3px; color: var(--blue); font-size: 11px; padding: 9px 13px; margin: 0 0 16px; line-height: 1.5; }
+
+    /* Forgot sub-header */
+    .forgot-header { text-align: center; margin-bottom: 22px; }
+    .forgot-icon   { font-size: 36px; margin-bottom: 8px; }
+    .forgot-title  { color: var(--gold); font-size: 13px; letter-spacing: 4px; text-transform: uppercase; margin: 0 0 8px; }
+    .forgot-sub    { color: var(--blue-dim); font-size: 11px; line-height: 1.6; }
+    .masked-email  { color: var(--text); }
+  </style>
+</head>
+<body>
+
+  <!-- ── Navbar ── -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="index.html"><img src="assets/top_logo.png" alt="Tales of Pirates" class="nav-logo" /></a>
+      <ul class="nav-links">
+        <li><a href="index.html">&#9875; Inicio</a></li>
+        <li><a href="registro.html">&#128100; Registro</a></li>
+        <li><a href="rankings.html">&#9878; Rankings</a></li>
+        <li><a href="descargar.html" class="nav-download">&#11015; Descargar</a></li>
+        <li><a href="#" data-discord class="nav-discord" target="_blank" rel="noopener">&#128172; Discord</a></li>
+      </ul>
+      <button class="nav-burger" id="navBurger" aria-label="Menú"><span></span><span></span><span></span></button>
+    </div>
+    <div class="nav-mobile" id="navMobile">
+      <a href="index.html">&#9875; Inicio</a>
+      <a href="registro.html" class="nm-reg">&#128100; Registro</a>
+      <a href="rankings.html">&#9878; Rankings</a>
+      <a href="descargar.html">&#11015; Descargar</a>
+      <a href="#" data-discord class="nm-disc" target="_blank" rel="noopener">&#128172; Discord</a>
+    </div>
+  </nav>
+
+  <!-- ── Contenido ── -->
+  <div class="page-wrap">
+    <div class="card">
+
+      <div class="card-header">
+        <img src="assets/top_logo.png" alt="Tales of Pirates" class="card-logo" />
+        <p class="card-subtitle">&#9875; &nbsp; Crew Registration &nbsp; &#9875;</p>
+      </div>
+
+      <!-- Tabs -->
+      <div class="card-tabs">
+        <button class="tab-btn active" id="tabReg"    onclick="showTab('register')">&#128100; Crear Cuenta</button>
+        <button class="tab-btn"        id="tabForgot" onclick="showTab('forgot1')">&#128273; Recuperar</button>
+      </div>
+
+      <div class="card-body">
+
+        <!-- VIEW: Registro -->
+        <div class="view active" id="vRegister">
+          <div id="regError"   class="alert-error"   style="display:none"></div>
+          <div class="field-group">
+            <label class="field-label">&#9875; Nombre de usuario</label>
+            <input id="regUser" type="text"     class="field-input" placeholder="Ej: CaptainBlack" maxlength="50" />
+          </div>
+          <div class="field-group">
+            <label class="field-label">&#9876; Contraseña</label>
+            <input id="regPass" type="password" class="field-input" placeholder="Mínimo 4 caracteres" maxlength="50" />
+          </div>
+          <div class="field-group">
+            <label class="field-label">&#9993; Correo electrónico</label>
+            <input id="regEmail" type="email"   class="field-input" placeholder="tu@correo.com" maxlength="50" />
+          </div>
+          <button class="submit-btn" id="btnRegister" onclick="doRegister()">&#9875; &nbsp; UNIRSE A LA TRIPULACIÓN</button>
+        </div>
+
+        <!-- VIEW: Loading -->
+        <div class="view" id="vLoading">
+          <div class="loading">
+            <span class="loading-icon">&#9875;</span>
+            <p class="loading-text">Un momento, marinero...</p>
+          </div>
+        </div>
+
+        <!-- VIEW: Éxito registro -->
+        <div class="view" id="vSuccess">
+          <div class="success-view">
+            <div class="success-icon">&#127869;</div>
+            <h2 class="success-title">¡Bienvenido a bordo!</h2>
+            <p class="success-text"><strong id="createdUser"></strong> ya forma parte de la tripulación.</p>
+            <div class="success-note">&#9993;&nbsp; Revisa tu correo — te enviamos tus datos de acceso.</div>
+            <button class="submit-btn" onclick="resetForm()">&#43; &nbsp; REGISTRAR OTRO MARINERO</button>
+          </div>
+        </div>
+
+        <!-- VIEW: Forgot step 1 -->
+        <div class="view" id="vForgot1">
+          <div class="forgot-header">
+            <div class="forgot-icon">&#128273;</div>
+            <h3 class="forgot-title">RECUPERAR CONTRASEÑA</h3>
+            <p class="forgot-sub">Ingresa tu usuario y te enviaremos un código al correo registrado.</p>
+          </div>
+          <div id="f1Error" class="alert-error" style="display:none"></div>
+          <div class="field-group">
+            <label class="field-label">&#9875; Nombre de usuario</label>
+            <input id="fUser" type="text" class="field-input" placeholder="Tu nombre de usuario" maxlength="50" />
+          </div>
+          <button class="submit-btn" onclick="doRequestOtp()">&#9993; &nbsp; ENVIAR CÓDIGO</button>
+          <div class="link-row"><button class="link-btn" onclick="showTab('register')">&#8592; Volver al registro</button></div>
+        </div>
+
+        <!-- VIEW: Forgot step 2 (OTP) -->
+        <div class="view" id="vForgot2">
+          <div class="forgot-header">
+            <div class="forgot-icon">&#9993;</div>
+            <h3 class="forgot-title">CÓDIGO ENVIADO</h3>
+            <p class="forgot-sub">Enviamos un código de 6 dígitos a <strong class="masked-email" id="maskedEmail"></strong>. Expira en 5 min.</p>
+          </div>
+          <div id="f2Error" class="alert-error" style="display:none"></div>
+          <div class="field-group">
+            <label class="field-label">&#128273; Código de verificación</label>
+            <input id="fOtp" type="text" class="field-input otp-input" placeholder="000000" maxlength="6" inputmode="numeric" oninput="this.value=this.value.replace(/\D/g,'').slice(0,6)" />
+          </div>
+          <button class="submit-btn" onclick="doVerifyOtp()">&#9989; &nbsp; VERIFICAR CÓDIGO</button>
+          <div class="link-row"><button class="link-btn" onclick="doRequestOtp()">&#8635; Reenviar código</button></div>
+          <div class="link-row" style="margin-top:4px"><button class="link-btn" onclick="showTab('register')">&#8592; Volver al registro</button></div>
+        </div>
+
+        <!-- VIEW: Forgot step 3 (nueva pass) -->
+        <div class="view" id="vForgot3">
+          <div class="forgot-header">
+            <div class="forgot-icon">&#128274;</div>
+            <h3 class="forgot-title">NUEVA CONTRASEÑA</h3>
+            <p class="forgot-sub">Elige una contraseña segura para tu cuenta.</p>
+          </div>
+          <div id="f3Error" class="alert-error" style="display:none"></div>
+          <div class="field-group">
+            <label class="field-label">&#9876; Nueva contraseña</label>
+            <input id="fNewPass"     type="password" class="field-input" placeholder="Mínimo 4 caracteres" maxlength="50" />
+          </div>
+          <div class="field-group">
+            <label class="field-label">&#9876; Confirmar contraseña</label>
+            <input id="fConfirmPass" type="password" class="field-input" placeholder="Repite la contraseña"  maxlength="50" />
+          </div>
+          <button class="submit-btn" onclick="doResetPassword()">&#9875; &nbsp; GUARDAR CONTRASEÑA</button>
+        </div>
+
+        <!-- VIEW: Forgot éxito -->
+        <div class="view" id="vForgotOk">
+          <div class="success-view">
+            <div class="success-icon">&#9989;</div>
+            <h2 class="success-title">¡Contraseña actualizada!</h2>
+            <p class="success-text">La contraseña de <strong id="updatedUser"></strong> ha sido restablecida.</p>
+            <div class="success-note">&#9875;&nbsp; Ya puedes iniciar sesión con tu nueva contraseña.</div>
+            <button class="submit-btn" onclick="showTab('register')">&#9875; &nbsp; IR AL REGISTRO</button>
+          </div>
+        </div>
+
+      </div><!-- /card-body -->
+    </div><!-- /card -->
+  </div>
+
+  <footer class="footer"><p>&#9875; &nbsp; Tales of Pirates — The High Seas Await &nbsp; &#9875;</p></footer>
+
+  <script src="js/nav.js"></script>
+  <script src="js/registro.js"></script>
+</body>
+</html>

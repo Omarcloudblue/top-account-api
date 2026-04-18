@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rankings — Tales of Pirates</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .page-hero {
+      background: linear-gradient(180deg,var(--navy-2),var(--navy));
+      border-bottom: 1px solid rgba(201,168,76,.3);
+      text-align: center; padding: 50px 20px 40px;
+    }
+    .page-title { color: #fff; font-size: 28px; letter-spacing: 8px; text-transform: uppercase; margin: 0 0 8px; }
+    .page-sub   { color: var(--blue-dim); font-size: 10px; letter-spacing: 4px; text-transform: uppercase; }
+
+    .rank-table {
+      width: 100%; border-collapse: collapse;
+      background: linear-gradient(180deg,var(--navy-3),var(--navy));
+      border: 1px solid var(--border); border-radius: 4px; overflow: hidden;
+    }
+    .rank-table th {
+      background: rgba(201,168,76,.08);
+      color: var(--gold); font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+      padding: 14px 16px; text-align: left; border-bottom: 1px solid var(--border);
+    }
+    .rank-table td {
+      color: var(--text); font-size: 13px;
+      padding: 13px 16px; border-bottom: 1px solid var(--border-dim);
+    }
+    .rank-table tr:last-child td { border-bottom: none; }
+    .rank-table tr:hover td { background: rgba(201,168,76,.04); }
+
+    .rank-pos { color: var(--gold); font-weight: bold; font-size: 15px; }
+    .rank-pos.top1 { color: #ffd700; }
+    .rank-pos.top2 { color: #c0c0c0; }
+    .rank-pos.top3 { color: #cd7f32; }
+
+    .coming-soon {
+      text-align: center; padding: 60px 20px;
+      color: var(--blue-dim); font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    }
+    .coming-soon .icon { font-size: 48px; display: block; margin-bottom: 16px; opacity: .5; }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="index.html"><img src="assets/top_logo.png" alt="Tales of Pirates" class="nav-logo" /></a>
+      <ul class="nav-links">
+        <li><a href="index.html">&#9875; Inicio</a></li>
+        <li><a href="registro.html">&#128100; Registro</a></li>
+        <li><a href="rankings.html">&#9878; Rankings</a></li>
+        <li><a href="descargar.html" class="nav-download">&#11015; Descargar</a></li>
+        <li><a href="#" data-discord class="nav-discord" target="_blank" rel="noopener">&#128172; Discord</a></li>
+      </ul>
+      <button class="nav-burger" id="navBurger" aria-label="Menú"><span></span><span></span><span></span></button>
+    </div>
+    <div class="nav-mobile" id="navMobile">
+      <a href="index.html">&#9875; Inicio</a>
+      <a href="registro.html" class="nm-reg">&#128100; Registro</a>
+      <a href="rankings.html">&#9878; Rankings</a>
+      <a href="descargar.html">&#11015; Descargar</a>
+      <a href="#" data-discord class="nm-disc" target="_blank" rel="noopener">&#128172; Discord</a>
+    </div>
+  </nav>
+
+  <div class="page-hero">
+    <h1 class="page-title">Rankings</h1>
+    <p class="page-sub">&#9878; &nbsp; Top jugadores del servidor &nbsp; &#9878;</p>
+  </div>
+
+  <div class="section-wrap">
+    <div id="rankContent">
+      <div class="coming-soon">
+        <span class="icon">&#9878;</span>
+        Cargando rankings...
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer"><p>&#9875; &nbsp; Tales of Pirates — The High Seas Await &nbsp; &#9875;</p></footer>
+
+  <script src="js/nav.js"></script>
+  <script>
+    // TODO: conectar con endpoint /rankings cuando esté disponible en la API
+    // Por ahora muestra datos mock para ver el diseño
+    const mockData = [
+      { pos:1, name:'CaptainBlack',  level:85, guild:'Skull Pirates' },
+      { pos:2, name:'MarineroX',     level:82, guild:'Sea Dogs'      },
+      { pos:3, name:'Piratea_2024',  level:79, guild:'Sin gremio'    },
+      { pos:4, name:'OceanLord',     level:77, guild:'Skull Pirates' },
+      { pos:5, name:'SaltWater',     level:74, guild:'Sea Dogs'      },
+    ];
+
+    function posClass(p) { return p===1?'top1':p===2?'top2':p===3?'top3':''; }
+    function posIcon(p)  { return p===1?'🥇':p===2?'🥈':p===3?'🥉':p; }
+
+    const html = `
+      <table class="rank-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Jugador</th>
+            <th>Nivel</th>
+            <th>Gremio</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${mockData.map(r => `
+          <tr>
+            <td><span class="rank-pos ${posClass(r.pos)}">${posIcon(r.pos)}</span></td>
+            <td>${r.name}</td>
+            <td>${r.level}</td>
+            <td>${r.guild}</td>
+          </tr>`).join('')}
+        </tbody>
+      </table>
+      <p style="text-align:center;margin-top:20px;color:var(--blue-dim);font-size:10px;letter-spacing:2px;">
+        DATOS DE EJEMPLO — Se actualizarán con los rankings reales del servidor
+      </p>`;
+
+    document.getElementById('rankContent').innerHTML = html;
+  </script>
+</body>
+</html>
