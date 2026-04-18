@@ -1,5 +1,9 @@
 /* ── Configuración ── */
-const API = ''; // vacío = misma origin (localhost:3000 en local, dominio en prod)
+// En local apunta al mismo server (puerto 3000)
+// En producción (Netlify) apunta al tunnel público de la API
+const API = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
+  ? ''
+  : 'https://squatter-saved-broiler.ngrok-free.dev';
 const API_KEY = 'top-sf-secret-key-2024';
 
 /* ── Estado ── */
